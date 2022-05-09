@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Home = () => {
+const Login = () => {
     return (
         <div>
-            <h1>Welcome to Home</h1>
+            <h1>Welcome to login</h1>
         </div>
     );
 };
 
-export default Home;
+export default Login;
