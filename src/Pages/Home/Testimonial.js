@@ -32,7 +32,7 @@ const Testimonial = () => {
         "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content",
     },
   ];
-  
+
   return (
     <section className="mb-28 px-6 md:px-12 mx-auto">
       <div className="flex justify-between items-center">

@@ -6,7 +6,7 @@ const ContactUs = () => {
   return (
     <section
       style={{ background: `url(${appointment})` }}
-      className="mb-28 p-10 bg-cover bg-no-repeat bg-center"
+      className="mb-10 py-16 px-5 bg-cover bg-no-repeat bg-center"
     >
       <div className="">
         <div className="text-center">
