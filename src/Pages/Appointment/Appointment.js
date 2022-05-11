@@ -8,7 +8,7 @@ const Appointment = () => {
   return (
     <section>
       <AppointmentBanner date={date} setDate={setDate}></AppointmentBanner>
-      <AvailableAppointment date={date}></AvailableAppointment>
+      <AvailableAppointment date={date ? date : new Date()}></AvailableAppointment>
       <Footer></Footer>
     </section>
   );

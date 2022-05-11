@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   useEffect(() => {}, [date]);
+
   const handleBooking = (event) => {
     event.preventDefault();
     const date = event.target.date.value;
@@ -10,8 +11,9 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     const name = event.target.name.value;
     const email = event.target.email.value;
     const phone = event.target.phone.value;
-    setTreatment(null)
+    setTreatment(null);
   };
+
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
