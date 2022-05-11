@@ -6,7 +6,7 @@ import InfoCard from "./InfoCard";
 
 const Info = () => {
   return (
-    <div className="container px-6 mx-auto mb-20">
+    <div className="container mx-auto mb-28 px-6 md:px-12">
       <div className="lg:grid grid-cols-3 gap-10">
         <InfoCard
           img={clock}
