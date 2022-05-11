@@ -35,7 +35,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="pt-20 text-center">
-        <p>Copyright © {currentYear} - All right reserved by Al-amin sheikh</p>
+        <p>Copyright &copy; {currentYear} - All right reserved</p>
       </div>
     </footer>
   );

@@ -11,23 +11,23 @@ const ContactUs = () => {
       <div className="">
         <div className="text-center">
           <h3 className="text-xl font-bold text-secondary">Contact Us</h3>
-          <h2 className="text-3xl text-white">Stay connected with us</h2>
+          <h2 className="text-4xl text-white">Stay connected with us</h2>
         </div>
         <div className="text-center mt-8">
           <input
             type="email"
             placeholder="Email Address"
-            className="input w-full max-w-xs mb-3"
+            className="input w-full max-w-xl mb-3"
           />
           <br />
           <input
             type="text"
             placeholder="Subject"
-            className="input w-full max-w-xs mb-3"
+            className="input w-full max-w-xl mb-3"
           />
           <br />
           <textarea
-            className="textarea textarea-bordered w-full max-w-xs mb-3 h-28"
+            className="textarea textarea-bordered w-full max-w-xl mb-3 h-40"
             placeholder="Your Message"
           ></textarea>
           <br />
