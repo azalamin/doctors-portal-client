@@ -1,7 +1,7 @@
 import React from "react";
 import bannerBg from "../../assets/images/bg.png";
 import chair from "../../assets/images/chair.png";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "../Shared/PrimaryButton";
 
 const Banner = () => {
   return (
@@ -9,7 +9,7 @@ const Banner = () => {
       style={{ backgroundImage: `url("${bannerBg}")` }}
       className="hero min-h-screen bg-cover bg-center bg-no-repeat pb-20"
     >
-      <div className="hero-content flex-col lg:flex-row-reverse px-6 px-6 md:px-12 mx-auto">
+      <div className="hero-content flex-col lg:flex-row-reverse px-6 md:px-12 mx-auto">
         <img
           src={chair}
           className="lg:max-w-lg sm:max-w-sm rounded-lg shadow-2xl"
