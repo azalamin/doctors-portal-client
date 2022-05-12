@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     useSignInWithEmailAndPassword,
     useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Spinner from "../Shared/Spinner";
 
@@ -18,30 +18,35 @@ const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
+  let signInError;
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    if (user || gUser) {
+      navigate(from, { replace: true });
+    }
+  }, [user, gUser, from, navigate]);
+
   if (loading || gLoading) {
     return <Spinner></Spinner>;
   }
 
-  let signInError;
   if (error || gError) {
     signInError = (
-      <p className="text-red-700 text-xs mb-2">
-        {error?.message || gError?.message}
+      <p className="text-red-500">
+        <small>{error?.message || gError?.message}</small>
       </p>
     );
   }
 
-  if (gUser || user) {
-    console.log(gUser || user);
-  }
-
   const onSubmit = (data) => {
-    console.log(data);
-    signInWithEmailAndPassword(data?.email, data?.password);
+    signInWithEmailAndPassword(data.email, data.password);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[87vh]">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Login</h2>
@@ -52,28 +57,28 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder="Your Email"
                 className="input input-bordered w-full max-w-xs"
                 {...register("email", {
                   required: {
                     value: true,
-                    message: "Email is required",
+                    message: "Email is Required",
                   },
                   pattern: {
                     value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                    message: "Provide a valid email",
+                    message: "Provide a valid Email",
                   },
                 })}
               />
               <label className="label">
                 {errors.email?.type === "required" && (
-                  <span className="label-text-alt text-red-700">
-                    {errors?.email?.message}
+                  <span className="label-text-alt text-red-500">
+                    {errors.email.message}
                   </span>
                 )}
                 {errors.email?.type === "pattern" && (
-                  <span className="label-text-alt text-red-700">
-                    {errors?.email?.message}
+                  <span className="label-text-alt text-red-500">
+                    {errors.email.message}
                   </span>
                 )}
               </label>
@@ -89,27 +94,28 @@ const Login = () => {
                 {...register("password", {
                   required: {
                     value: true,
-                    message: "Password is required",
+                    message: "Password is Required",
                   },
                   minLength: {
                     value: 6,
-                    message: "Must be 6 character or longer ",
+                    message: "Must be 6 characters or longer",
                   },
                 })}
               />
               <label className="label">
                 {errors.password?.type === "required" && (
-                  <span className="label-text-alt text-red-700">
-                    {errors?.password?.message}
+                  <span className="label-text-alt text-red-500">
+                    {errors.password.message}
                   </span>
                 )}
                 {errors.password?.type === "minLength" && (
-                  <span className="label-text-alt text-red-700">
-                    {errors?.password?.message}
+                  <span className="label-text-alt text-red-500">
+                    {errors.password.message}
                   </span>
                 )}
               </label>
             </div>
+
             {signInError}
             <input
               className="btn w-full max-w-xs text-white"
@@ -117,11 +123,13 @@ const Login = () => {
               value="Login"
             />
           </form>
-          <p className="text-sm py-3 text-center font-medium">
-            New to Doctors Portal?
-            <Link to="/signup" className="text-secondary cursor-pointer">
-              Create new account
-            </Link>
+          <p>
+            <small>
+              New to Doctors Portal{" "}
+              <Link className="text-primary" to="/signup">
+                Create New Account
+              </Link>
+            </small>
           </p>
           <div className="divider">OR</div>
           <button
