@@ -35,7 +35,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             <input
               type="text"
               value={format(date, "PP")}
-              disabled
+              readOnly
               name="date"
               className="input input-bordered w-full max-w-xl mb-3"
             />
@@ -54,18 +54,17 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             <input
               type="text"
               value={user?.displayName}
-              disabled
+              readOnly
               className="input input-bordered w-full max-w-xl mb-3"
               name="name"
-              required
             />
             <br />
             <input
               type="Email"
-              placeholder="Email"
+              value={user?.email}
+              readOnly
               className="input input-bordered w-full max-w-xl mb-3"
               name="email"
-              required
             />
             <br />
             <input
