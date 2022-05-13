@@ -114,6 +114,9 @@ const Login = () => {
                   </span>
                 )}
               </label>
+              <Link to="/resetPassword" className="mb-3 text-accent hover:text-secondary">
+                Forgot Password?
+              </Link>
             </div>
 
             {signInError}

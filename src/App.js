@@ -6,6 +6,7 @@ import Appointment from "./Pages/Appointment/Appointment";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import ProtectedRoute from "./Pages/Login/ProtectedRoute";
+import ResetPassword from "./Pages/Login/ResetPassword";
 import Signup from "./Pages/Login/Signup";
 import Navbar from "./Pages/Shared/Navbar";
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="about" element={<About />}></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<Signup />}></Route>
+        <Route path="resetPassword" element={<ResetPassword />}></Route>
       </Routes>
       <ToastContainer />
     </div>
