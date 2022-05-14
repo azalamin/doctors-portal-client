@@ -1,19 +1,48 @@
 import { format } from "date-fns";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
-    const [user] = useAuthState(auth);
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
+  const [user] = useAuthState(auth);
   useEffect(() => {}, [date, user]);
+  const formattedDate = format(date, "PP");
 
   const handleBooking = (event) => {
+    const { _id, name } = treatment;
     event.preventDefault();
-    const date = event.target.date.value;
-    const slot = event.target.slot.value;
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const phone = event.target.phone.value;
+    const slot = event?.target?.slot?.value;
+    const phone = event?.target?.phone?.value;
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formattedDate,
+      slot,
+      patient: user?.email,
+      patientName: user?.displayName,
+      phone,
+    };
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success) {
+          toast.success(`Appointment is booked on ${formattedDate} at ${slot}`);
+        } else {
+          toast.error(
+            `Already have an appointment on ${data?.booking?.date} at ${data?.booking?.slot}`
+          );
+        }
+        refetch();
+      }); 
+    // close the modal
     setTreatment(null);
   };
 
@@ -72,7 +101,6 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               placeholder="Phone Number"
               className="input input-bordered w-full max-w-xl mb-3"
               name="phone"
-              required
             />
             <br />
             <br />
