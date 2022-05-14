@@ -17,8 +17,8 @@ const MyAppointment = () => {
   return (
     <div>
       <h2>MY Appointment: {appointments?.length}</h2>
-      <div class="overflow-x-auto">
-        <table class="table w-full text-center">
+      <div className="overflow-x-auto">
+        <table className="table w-full text-center">
           <thead>
             <tr>
               <th>#</th>
