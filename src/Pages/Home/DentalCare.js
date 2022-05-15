@@ -1,8 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import treatment from '../../assets/images/treatment.png';
-import PrimaryButton from "../Shared/PrimaryButton";
 
 const DentalCare = () => {
+  const navigate = useNavigate()
   return (
     <div className="card rounded-none lg:card-side bg-base-100 md:w-10/12 px-6 md:px-12 mx-auto mb-28">
       <figure className="lg:w-[200%]">
@@ -21,7 +22,12 @@ const DentalCare = () => {
             here', making it look like readable English. Many desktop publishing
             packages and web page
           </p>
-          <PrimaryButton>Get Started</PrimaryButton>
+          <button
+            className="btn btn-primary bg-gradient-to-r from-secondary to-primary uppercase text-white font-bold"
+            onClick={() => navigate("/appointment")}
+          >
+            Get Started
+          </button>
         </div>
       </div>
     </div>

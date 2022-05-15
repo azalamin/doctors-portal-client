@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import bannerBg from "../../assets/images/bg.png";
 import chair from "../../assets/images/chair.png";
-import PrimaryButton from "../Shared/PrimaryButton";
 
 const Banner = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{ backgroundImage: `url("${bannerBg}")` }}
@@ -22,7 +23,12 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <PrimaryButton>Get Started</PrimaryButton>
+          <button
+            className="btn btn-primary bg-gradient-to-r from-secondary to-primary uppercase text-white font-bold"
+            onClick={() => navigate("/appointment")}
+          >
+            Get Started
+          </button>
         </div>
       </div>
     </div>

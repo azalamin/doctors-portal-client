@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import appointment from "../../assets/images/appointment.png";
 import doctor from "../../assets/images/doctor.png";
-import PrimaryButton from "../Shared/PrimaryButton";
 
 const MakeAppointment = () => {
+  const navigate = useNavigate()
   return (
     <section
       style={{ background: `url(${appointment})` }}
@@ -26,7 +27,12 @@ const MakeAppointment = () => {
             here', making it look like readable English. Many desktop publishing
             packages and web page
           </p>
-          <PrimaryButton>Get Started</PrimaryButton>
+          <button
+            className="btn btn-primary bg-gradient-to-r from-secondary to-primary uppercase text-white font-bold"
+            onClick={() => navigate("/appointment")}
+          >
+            Get Started
+          </button>
         </div>
       </div>
     </section>
