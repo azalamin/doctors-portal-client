@@ -7,9 +7,11 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import History from "./Pages/Dashboard/History";
 import MyAppointment from "./Pages/Dashboard/MyAppointment";
 import MyReview from "./Pages/Dashboard/MyReview";
+import Users from "./Pages/Dashboard/Users";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import ProtectedRoute from "./Pages/Login/ProtectedRoute";
+import RequireAdmin from "./Pages/Login/RequireAdmin";
 import ResetPassword from "./Pages/Login/ResetPassword";
 import Signup from "./Pages/Login/Signup";
 import Navbar from "./Pages/Shared/Navbar";
@@ -38,8 +40,16 @@ function App() {
           }
         >
           <Route index element={<MyAppointment />} />
-          <Route path="reviews" element={<MyReview />}/>
-          <Route path="history" element={<History />}/>
+          <Route path="reviews" element={<MyReview />} />
+          <Route path="history" element={<History />} />
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <Users />
+              </RequireAdmin>
+            }
+          />
         </Route>
         <Route path="about" element={<About />}></Route>
         <Route path="login" element={<Login />}></Route>

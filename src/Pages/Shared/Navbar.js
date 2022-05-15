@@ -34,6 +34,7 @@ const Navbar = () => {
           <button
             onClick={async () => {
               await signOut(auth);
+              localStorage.removeItem("accessToken");
               navigate("/login");
             }}
             className="btn btn-ghost"

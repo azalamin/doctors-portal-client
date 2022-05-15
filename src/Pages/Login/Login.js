@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import {
-    useSignInWithEmailAndPassword,
-    useSignInWithGoogle
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 import Spinner from "../Shared/Spinner";
 
 const Login = () => {
@@ -17,6 +18,7 @@ const Login = () => {
   } = useForm();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const [token] = useToken(user || gUser);
 
   let signInError;
   const navigate = useNavigate();
@@ -24,10 +26,10 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if (user || gUser) {
+    if (token) {
       navigate(from, { replace: true });
     }
-  }, [user, gUser, from, navigate]);
+  }, [token, from, navigate]);
 
   if (loading || gLoading) {
     return <Spinner></Spinner>;
@@ -114,7 +116,10 @@ const Login = () => {
                   </span>
                 )}
               </label>
-              <Link to="/resetPassword" className="mb-3 text-accent hover:text-secondary">
+              <Link
+                to="/resetPassword"
+                className="mb-3 text-accent hover:text-secondary"
+              >
                 Forgot Password?
               </Link>
             </div>

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
-    useCreateUserWithEmailAndPassword,
-    useSignInWithGoogle,
-    useUpdateProfile
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+  useUpdateProfile
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 import Spinner from "../Shared/Spinner";
 
 const SignUp = () => {
@@ -22,11 +23,16 @@ const SignUp = () => {
     });
 
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-
+  const [token] = useToken(user || gUser);
   const navigate = useNavigate();
 
-  let signInError;
+  useEffect(() => {
+    if (token) {
+      navigate("/appointment");
+    }
+  }, [token, navigate]);
 
+  let signInError;
   if (loading || gLoading || updating) {
     return <Spinner></Spinner>;
   }
@@ -41,15 +47,9 @@ const SignUp = () => {
     );
   }
 
-  if (user || gUser) {
-    console.log(user || gUser);
-  }
-
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
-    console.log("update done");
-    navigate("/appointment");
   };
   return (
     <div className="flex justify-center items-center min-h-screen mb-20">
