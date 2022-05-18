@@ -12,19 +12,19 @@ const Info = () => {
           img={clock}
           title="Opening Hours"
           des="Lorem Ipsum is simply dummy text of the pri"
-          bgClass="bg-gradient-to-r from-secondary to-primary"
+          bgclassName="bg-gradient-to-r from-secondary to-primary"
         ></InfoCard>
         <InfoCard
           img={marker}
           title="Visit our location"
           des="Brooklyn, NY 10036, United States"
-          bgClass="bg-accent"
+          bgclassName="bg-accent"
         ></InfoCard>
         <InfoCard
           img={phone}
           title="Contact us now"
           des="+000 123 456789"
-          bgClass="bg-gradient-to-r from-secondary to-primary"
+          bgclassName="bg-gradient-to-r from-secondary to-primary"
         ></InfoCard>
       </div>
     </div>

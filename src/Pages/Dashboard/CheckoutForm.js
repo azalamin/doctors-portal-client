@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react";
 const CheckoutForm = ({ appointment }) => {
   const [clientSecret, setClientSecret] = useState("");
   const [cardError, setCardError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [processing, setProcessing] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
   const stripe = useStripe();
   const elements = useElements();
 
-  const { price } = appointment;
+  const { _id, price, patient, patientName } = appointment; 
 
   useEffect(() => {
-    fetch(`http://localhost:5000/create-payment-intent`, {
+    fetch(`https://doctors-portal360.herokuapp.com/create-payment-intent`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -20,7 +23,6 @@ const CheckoutForm = ({ appointment }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data?.clientSecret) {
           setClientSecret(data?.clientSecret);
         }
@@ -40,8 +42,55 @@ const CheckoutForm = ({ appointment }) => {
       type: "card",
       card,
     });
+
+    setProcessing(true);
     setCardError(error?.message || "");
+    setSuccess("");
+    // confirm card payment
+    const { paymentIntent, error: intentError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: patientName,
+            email: patient,
+          },
+        },
+      });
+
+    if (intentError) {
+      setCardError(intentError?.message);
+      setProcessing(false);
+    } else {
+      setCardError("");
+      console.log(paymentIntent);
+      setTransactionId(paymentIntent?.id);
+      setSuccess("Congrats! Your payment is successful");
+      // store payment on database
+      const payment = {
+        appointment: _id,
+        transactionId: paymentIntent?.id,
+      };
+      fetch(`https://doctors-portal360.herokuapp.com/booking/${_id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          
+          console.log(data);
+        });
+    }
   };
+
+//   if (processing) {
+//     return <Spinner />;
+//   }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -64,12 +113,21 @@ const CheckoutForm = ({ appointment }) => {
         <button
           className="btn btn-success btn-sm mt-4"
           type="submit"
-          disabled={!stripe || !clientSecret }
+          disabled={!stripe || !clientSecret || success}
         >
           Pay
         </button>
       </form>
       {cardError && <p className="text-red-500">{cardError}</p>}
+      {success && (
+        <div className="text-success">
+          <p>{success}</p>
+          <p>
+            Transaction ID :
+            <span className="text-orange-600"> {transactionId}</span>
+          </p>
+        </div>
+      )}
     </>
   );
 };
