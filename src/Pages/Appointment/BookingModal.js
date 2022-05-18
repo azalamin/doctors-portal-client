@@ -10,7 +10,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
   const formattedDate = format(date, "PP");
 
   const handleBooking = (event) => {
-    const { _id, name } = treatment;
+    const { _id, name, price } = treatment;
     event.preventDefault();
     const slot = event?.target?.slot?.value;
     const phone = event?.target?.phone?.value;
@@ -19,6 +19,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
       treatment: name,
       date: formattedDate,
       slot,
+      price,
       patient: user?.email,
       patientName: user?.displayName,
       phone,
