@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Spinner from "../Shared/Spinner";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 import DoctorRow from "./DoctorRow";
 
 const ManageDoctors = () => {
-  const { data: doctors, isLoading, refetch } = useQuery("doctors", () =>
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const {
+    data: doctors,
+    isLoading,
+    refetch,
+  } = useQuery("doctors", () =>
     fetch(`http://localhost:5000/doctor`, {
       method: "GET",
       headers: {
@@ -33,15 +39,22 @@ const ManageDoctors = () => {
           <tbody>
             {doctors.map((doctor, index) => (
               <DoctorRow
-                refetch={refetch}
                 doctor={doctor}
                 index={index}
                 key={doctor._id}
+                setDeleteConfirm={setDeleteConfirm}
               />
             ))}
           </tbody>
         </table>
       </div>
+      {deleteConfirm && (
+        <DeleteConfirmModal
+          refetch={refetch}
+          deleteConfirm={deleteConfirm}
+          setDeleteConfirm={setDeleteConfirm}
+        />
+      )}
     </div>
   );
 };

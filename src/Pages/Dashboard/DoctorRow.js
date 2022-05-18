@@ -1,27 +1,8 @@
 import React from "react";
-import { toast } from "react-toastify";
 
-const DoctorRow = ({ doctor, index, refetch }) => {
-  const { name, specialization, img, email } = doctor;
-  const handleDelete = (email) => {
-    console.log(email);
-    fetch(`http://localhost:5000/doctor/${email}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.deletedCount) {
-          toast.success(`Doctor ${name} is deleted`);
-          refetch();
-        } else{
-            toast.error(`Failed to delete`);
-        }
-      });
-  };
+const DoctorRow = ({ doctor, index, setDeleteConfirm }) => {
+  const { name, specialization, img } = doctor;
+
   return (
     <tr>
       <th>{index + 1}</th>
@@ -35,8 +16,9 @@ const DoctorRow = ({ doctor, index, refetch }) => {
       <td>{name}</td>
       <td>{specialization}</td>
       <td>
-        <button
-          onClick={() => handleDelete(email)}
+        <label
+          onClick={() => setDeleteConfirm(doctor)}
+          htmlFor="delete-confirm-modal"
           className="btn btn-circle btn-outline hover:bg-red-500 hover:border-white"
         >
           <svg
@@ -53,7 +35,7 @@ const DoctorRow = ({ doctor, index, refetch }) => {
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-        </button>
+        </label>
       </td>
     </tr>
   );
